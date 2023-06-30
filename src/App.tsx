@@ -1,24 +1,18 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Button, Text } from "@chakra-ui/react";
+import { useState } from "react";
 
 function App() {
+  const [fishCount, setFishCount] = useState(0);
+
+  const addFish = () => {
+    setFishCount(fishCount + 1);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h1>Idle Game</h1>
+      <Button onClick={addFish}>Fish</Button>
+      <Text>Fish: {fishCount}</Text>
     </div>
   );
 }
