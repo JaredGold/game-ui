@@ -5,6 +5,7 @@ import Wood from "../../Pages/Wood/Wood";
 const AppRoutes = () => {
   return (
     <Routes>
+      <Route path="/forage" element={<Forage />} />
       <Route path="/wood" element={<Wood />} />
       <Route path="/" element={<Wood />} />
     </Routes>
