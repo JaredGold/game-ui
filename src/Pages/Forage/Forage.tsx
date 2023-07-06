@@ -8,7 +8,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { useState } from "react";
-import { Item, nullItem } from "../../Utils/Types";
+import { Item, nullItem } from "../../utils/Types";
 import { foragingItems } from "./foragingItems";
 
 const Forage = () => {

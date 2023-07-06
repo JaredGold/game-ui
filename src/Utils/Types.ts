@@ -20,7 +20,7 @@ export const itemCategories = [
 export type ItemCategory = (typeof itemCategories)[number];
 
 export type Item = {
-  itemNumber: number;
+  itemId: number;
   itemName: string;
   category: ItemCategory;
   description: string;
@@ -30,7 +30,7 @@ export type Item = {
 };
 
 export const nullItem: Item = {
-  itemNumber: 0,
+  itemId: 0,
   itemName: "null",
   category: "test",
   description: "null",

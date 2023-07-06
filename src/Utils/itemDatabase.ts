@@ -1,10 +1,13 @@
-import { Item, ItemRarity } from "../../utils/Types";
+import { ItemRarity, Item } from "./Types";
 
 const { Common, Trash } = ItemRarity;
 
-// Order is important, filter goes through looking at the seed.
-export const foragingItems: Item[] = [
-  {
+type ItemDatabase = {
+  [itemId: number]: Item;
+};
+
+const itemDatabase: ItemDatabase = {
+  1: {
     itemId: 1,
     itemName: "Leaves",
     category: "trash",
@@ -13,7 +16,7 @@ export const foragingItems: Item[] = [
     rarity: Trash,
     seed: 500,
   },
-  {
+  2: {
     itemId: 2,
     itemName: "Rock",
     category: "crafting",
@@ -22,7 +25,7 @@ export const foragingItems: Item[] = [
     rarity: Common,
     seed: 750,
   },
-  {
+  3: {
     itemId: 3,
     itemName: "Stick",
     category: "crafting",
@@ -31,4 +34,6 @@ export const foragingItems: Item[] = [
     rarity: Common,
     seed: 1000,
   },
-];
+};
+
+export default itemDatabase;
