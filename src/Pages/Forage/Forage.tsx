@@ -8,12 +8,15 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { useState } from "react";
+import { useAppDispatch } from "../../state/hooks";
+import { addItem } from "../../state/slices/inventory/inventorySlice";
 import { Item, nullItem } from "../../utils/Types";
 import { foragingItems } from "./foragingItems";
 
 const Forage = () => {
-  const [items, setItems] = useState<Item[]>([]);
+  const [foundItem, setFoundItem] = useState<Item>();
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+  const dispatch = useAppDispatch();
 
   const startDisableTimeout = (time: number) => {
     // Enable the button after the specified time
@@ -32,14 +35,18 @@ const Forage = () => {
       let foundItem: Item = nullItem;
 
       for (const item of foragingItems) {
+        // TODO: Make this fail cleaner
+        if (!item.seed) {
+          throw new Error("Missing an item seed");
+        }
         if (rolledNumber <= item.seed) {
           foundItem = item;
           break; // Exit the loop after finding the item
         }
       }
 
-      console.log(`Item Found: ${foundItem?.itemName}`);
-      setItems([...items, foundItem]);
+      dispatch(addItem({ itemId: foundItem.itemId }));
+      setFoundItem(foundItem);
 
       startDisableTimeout(1);
     }
@@ -61,15 +68,12 @@ const Forage = () => {
           </Center>
         </CardBody>
       </Card>
-      {items.length > 0 && (
+      {foundItem && (
         <>
-          {/** remove this when inventory is working */}
           <Heading as="h4" size="md">
-            Items Found:
+            Item Found:
           </Heading>
-          {items.map((item, index) => (
-            <Text key={index}>{item.itemName}</Text>
-          ))}
+          <Text>{foundItem.itemName}</Text>
         </>
       )}
     </Box>

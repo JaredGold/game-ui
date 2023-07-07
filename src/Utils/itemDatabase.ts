@@ -34,6 +34,14 @@ const itemDatabase: ItemDatabase = {
     rarity: Common,
     seed: 1000,
   },
+  4: {
+    itemId: 4,
+    itemName: "Wood",
+    category: "crafting",
+    description: "It was once a tree",
+    value: 5,
+    rarity: Common,
+  },
 };
 
 export default itemDatabase;

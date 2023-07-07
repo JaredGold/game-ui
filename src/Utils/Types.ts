@@ -26,7 +26,7 @@ export type Item = {
   description: string;
   value: number;
   rarity: ItemRarity;
-  seed: number;
+  seed?: number;
 };
 
 export const nullItem: Item = {

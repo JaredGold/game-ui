@@ -1,12 +1,16 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Box, Heading, Flex, Text, Button, Progress } from "@chakra-ui/react";
 import { GiWoodAxe } from "react-icons/gi";
+import { useAppDispatch } from "../../state/hooks";
+import { addItem } from "../../state/slices/inventory/inventorySlice";
 
 const AutoWood = () => {
   const [wood, setWood] = useState(0);
   const [isAutoChopEnabled, setIsAutoChopEnabled] = useState(false);
   const [timeUntilNextWood, setTimeUntilNextWood] = useState(0);
   const [progress, setProgress] = useState(0);
+
+  const dispatch = useAppDispatch();
 
   const chopTimer = 4000;
   const toggleAutoChop = () => {
@@ -17,6 +21,8 @@ const AutoWood = () => {
     let timer: any;
 
     if (isAutoChopEnabled && timeUntilNextWood <= 0) {
+      // TODO: Remove fixed item in remake
+      dispatch(addItem({ itemId: 4 }));
       setWood((prevWood) => prevWood + 1);
       setTimeUntilNextWood(chopTimer);
       setProgress(0);
@@ -34,7 +40,7 @@ const AutoWood = () => {
     }
 
     return () => clearInterval(timer);
-  }, [wood, isAutoChopEnabled, timeUntilNextWood, chopTimer]);
+  }, [wood, isAutoChopEnabled, timeUntilNextWood, chopTimer, dispatch]);
 
   useEffect(() => {
     if (isAutoChopEnabled && timeUntilNextWood <= 0) {
@@ -44,7 +50,7 @@ const AutoWood = () => {
 
   return (
     <Box p="4">
-      <Heading>Wood</Heading>
+      <Heading>Auto Wood</Heading>
       <Flex direction="column">
         <Text>Total Logs: {wood}</Text>
         <Button
