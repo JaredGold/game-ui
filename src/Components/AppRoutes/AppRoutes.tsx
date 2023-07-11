@@ -1,3 +1,4 @@
+import { Flex } from "@chakra-ui/react";
 import { useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import Forage from "../../pages/Forage/Forage";
@@ -17,7 +18,7 @@ const AppRoutes = () => {
   };
 
   return (
-    <div style={{ display: "flex" }}>
+    <Flex>
       <LeftNav
         isNavOpen={isNavOpen}
         handleOpen={handleNavOpen}
@@ -37,7 +38,7 @@ const AppRoutes = () => {
           <Route path="/" element={<Wood />} />
         </Routes>
       </div>
-    </div>
+    </Flex>
   );
 };
 
