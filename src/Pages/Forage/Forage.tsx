@@ -1,5 +1,6 @@
 import { Box, Button, Card, CardBody, Center, Heading } from "@chakra-ui/react";
 import { useState } from "react";
+import useBottomToast from "../../hooks/useBottomToast";
 import { useAppDispatch } from "../../state/hooks";
 import { addItem } from "../../state/slices/inventory/inventorySlice";
 import { Item, nullItem } from "../../utils/Types";
@@ -7,10 +8,11 @@ import { foragingItems } from "./foragingItems";
 
 const Forage = () => {
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+
   const dispatch = useAppDispatch();
+  const { showToast, Toast } = useBottomToast();
 
   const startDisableTimeout = (time: number) => {
-    // Enable the button after the specified time
     setTimeout(() => {
       setIsButtonDisabled(false);
     }, time * 1000);
@@ -20,19 +22,17 @@ const Forage = () => {
 
   const forageButtonClick = () => {
     if (!isButtonDisabled) {
-      // Roll a random number between 1-1000
       const rolledNumber = Math.floor(Math.random() * 1000) + 1;
 
       let foundItem: Item = nullItem;
 
       for (const item of foragingItems) {
-        // TODO: Make this fail cleaner
         if (!item.seed) {
           throw new Error("Missing an item seed");
         }
         if (rolledNumber <= item.seed) {
           foundItem = item;
-          break; // Exit the loop after finding the item
+          break;
         }
       }
 
@@ -63,14 +63,7 @@ const Forage = () => {
           </Center>
         </CardBody>
       </Card>
-      {foundItem && (
-        <>
-          <Heading as="h4" size="md">
-            Item Found:
-          </Heading>
-          <Text>{foundItem.itemName}</Text>
-        </>
-      )}
+      <Toast />
     </Box>
   );
 };
