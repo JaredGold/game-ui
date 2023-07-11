@@ -1,12 +1,4 @@
-import {
-  Box,
-  Button,
-  Card,
-  CardBody,
-  Center,
-  Heading,
-  Text,
-} from "@chakra-ui/react";
+import { Box, Button, Card, CardBody, Center, Heading } from "@chakra-ui/react";
 import { useState } from "react";
 import { useAppDispatch } from "../../state/hooks";
 import { addItem } from "../../state/slices/inventory/inventorySlice";
@@ -14,7 +6,6 @@ import { Item, nullItem } from "../../utils/Types";
 import { foragingItems } from "./foragingItems";
 
 const Forage = () => {
-  const [foundItem, setFoundItem] = useState<Item>();
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const dispatch = useAppDispatch();
 
@@ -46,7 +37,11 @@ const Forage = () => {
       }
 
       dispatch(addItem({ itemId: foundItem.itemId }));
-      setFoundItem(foundItem);
+      showToast({
+        title: "Item Found",
+        text: foundItem.itemName,
+        time: 1,
+      });
 
       startDisableTimeout(1);
     }
