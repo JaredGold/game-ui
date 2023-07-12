@@ -1,6 +1,13 @@
-import { Box, Button, Card, CardBody, Center, Heading } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Card,
+  CardBody,
+  Center,
+  Heading,
+  useToast,
+} from "@chakra-ui/react";
 import { useState } from "react";
-import useBottomToast from "../../hooks/useBottomToast";
 import { useAppDispatch } from "../../state/hooks";
 import { addItem } from "../../state/slices/inventory/inventorySlice";
 import { Item, nullItem } from "../../utils/Types";
@@ -10,7 +17,7 @@ const Forage = () => {
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
 
   const dispatch = useAppDispatch();
-  const { showToast, Toast } = useBottomToast();
+  const toast = useToast();
 
   const startDisableTimeout = (time: number) => {
     setTimeout(() => {
@@ -37,10 +44,32 @@ const Forage = () => {
       }
 
       dispatch(addItem({ itemId: foundItem.itemId }));
-      showToast({
+
+      toast({
         title: "Item Found",
-        text: foundItem.itemName,
-        time: 1,
+        description: foundItem.itemName,
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+        variant: "solid",
+        position: "bottom",
+        render: () => (
+          <Box
+            p={4}
+            bg="purple.500"
+            color="white"
+            borderRadius="xl" // Set the borderRadius to "xl" for rounded corners
+            display="flex"
+            alignItems="center"
+          >
+            <Box ml={3}>
+              <Heading size="sm" fontWeight="bold">
+                Item Found
+              </Heading>
+              <Box fontSize="sm">{foundItem.itemName}</Box>
+            </Box>
+          </Box>
+        ),
       });
 
       startDisableTimeout(1);
@@ -63,7 +92,6 @@ const Forage = () => {
           </Center>
         </CardBody>
       </Card>
-      <Toast />
     </Box>
   );
 };
